@@ -795,7 +795,6 @@ service p2p_supplicant /system/bin/wpa_supplicant \
 service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
     #   we will start as root and wpa_supplicant will switch to user wifi
     #   after setting up the capabilities required for WEXT
@@ -805,6 +804,17 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
+
+service conn_init /system/bin/logwrapper /system/bin/hwaddrs
+    class late_start
+    user system
+    group system wifi
+    oneshot
+    
+# Running hwaddrs under init is enforcing 0600, we need more
+on property:init.svc.conn_init=stopped
+    chmod 644 /data/misc/wifi/config
+    chmod 644 /data/misc/bdaddr
 
 service port-bridge /system/bin/port-bridge /dev/smd0 /dev/ttyGS0
     class late_start
@@ -906,7 +916,21 @@ service ril-qmi /system/bin/sh /init.galbi.ril.sh
     class main
     user root
     oneshot
+    
+    #Create directory used by sensor subsystem(dsps)
+    mkdir /data/system/sensors
+    chmod 665 /data/system/sensors
+    write /data/system/sensors/settings 1
+    restorecon /data/system/sensors/settings
+    chmod 660 /data/system/sensors/settings
 
+    # AKM setting data
+    mkdir /data/misc/sensors
+    chmod 775 /data/misc/sensors
+
+    mkdir /persist/sensors
+    chmod 775 /persist/sensors
+        
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
@@ -919,8 +943,7 @@ service runtime_boot_res /system/vendor/bin/runtime_boot_res.sh
 service sensors /system/bin/sensors.qcom
     class main
     user root
-    group root
-    disabled
+    group sensors radio system
 
 service ssr_dump /system/bin/subsystem_ramdump 1
     class late_start
@@ -1365,10 +1388,10 @@ on property:sys.perf.profile=1
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor ondemand
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor ondemand
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor ondemand
     write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "20000 1400000:40000 1700000:20000"
     write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90
     write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1497600
