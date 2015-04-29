@@ -291,15 +291,17 @@
         <item>hspap:4092,87380,704512,4096,16384,110208</item>
         <item>lte:4094,87380,2560000,4096,16384,1220608</item>
     </string-array>
+    
     <!-- Screen brightness when dozing -->
     <integer name="config_screenBrightnessDoze">17</integer>
 
     <!-- Dream of notifications -->
     <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
+    <bool name="config_dozeAfterScreenOff">true</bool>
     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
     <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>
 
     <!-- Wether doze feature is enabled by default in settings. -->
     <bool name="config_doze_enabled_by_default">true</bool>
-    <bool name="config_dozeAfterScreenOff">true</bool>
+    
 </resources>
