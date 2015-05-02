@@ -303,5 +303,6 @@
 
     <!-- Wether doze feature is enabled by default in settings. -->
     <bool name="config_doze_enabled_by_default">true</bool>
-    
+     <!-- Hardware keys enable/disable -->
+    <bool name="config_hwKeysPref">false</bool>   
 </resources>
