@@ -1375,3 +1375,7 @@ on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
+
+    # Make touch settings remember their configs
+    write /sys/devices/virtual/input/lge_touch/touch_gesture 1
+    write /sys/devices/virtual/input/lge_touch/firmware 1
