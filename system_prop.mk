@@ -29,7 +29,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.hwc.mdpcomp.enable=true \
     ro.opengles.version=196608 \
-    ro.sf.lcd_density=534
+    ro.sf.lcd_density=560
 
 # GPS
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -76,6 +76,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.qualcomm.sns.daemon=e \
     debug.qualcomm.sns.hal=e \
     debug.qualcomm.sns.libsensor1=e
+
+#Wifi Hack
+net.tethering.noprovisioning=true
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \

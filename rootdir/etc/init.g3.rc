@@ -772,8 +772,7 @@ service netmgrd /system/bin/netmgrd
 
 service p2p_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
-    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets -N \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
     -I/system/etc/wifi/p2p_supplicant_overlay.conf \
     -puse_p2p_group_interface=1 -e/data/misc/wifi/entropy.bin \
@@ -790,7 +789,6 @@ service p2p_supplicant /system/bin/wpa_supplicant \
 service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
     #   we will start as root and wpa_supplicant will switch to user wifi
     #   after setting up the capabilities required for WEXT
@@ -888,20 +886,6 @@ service ril-qmi /system/bin/sh /init.galbi.ril.sh
     user root
     oneshot
 
-    #Create directory used by sensor subsystem(dsps)
-    mkdir /data/system/sensors
-    chmod 665 /data/system/sensors
-    write /data/system/sensors/settings 1
-    restorecon /data/system/sensors/settings
-    chmod 660 /data/system/sensors/settings
-
-    # AKM setting data
-    mkdir /data/misc/sensors
-    chmod 775 /data/misc/sensors
-
-    mkdir /persist/sensors
-    chmod 775 /persist/sensors
-
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
@@ -914,7 +898,8 @@ service runtime_boot_res /system/vendor/bin/runtime_boot_res.sh
 service sensors /system/bin/sensors.qcom
     class main
     user root
-    group sensors radio system
+    group root
+    disabled
 
 service ssr_dump /system/bin/subsystem_ramdump 1
     class late_start
@@ -1368,7 +1353,3 @@ on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
-
-    # Make touch settings remember their configs
-    write /sys/devices/virtual/input/lge_touch/touch_gesture 1
-    write /sys/devices/virtual/input/lge_touch/firmware 1
