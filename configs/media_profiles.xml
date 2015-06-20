@@ -39,7 +39,7 @@
 <!ATTLIST Audio sampleRate CDATA #REQUIRED>
 <!ATTLIST Audio channels (1|2) #REQUIRED>
 <!ELEMENT ImageEncoding EMPTY>
-<!ATTLIST ImageEncoding quality (90|80|70|60|50|40) #REQUIRED>
+<!ATTLIST ImageEncoding quality (100|90|80|70|60|50) #REQUIRED>
 <!ELEMENT ImageDecoding EMPTY>
 <!ATTLIST ImageDecoding memCap CDATA #REQUIRED>
 <!ELEMENT Camera EMPTY>
@@ -157,19 +157,19 @@
                    sampleRate="48000"
                    channels="2" />
         </EncoderProfile>
-<!--
-        <EncoderProfile quality="hfr720p" fileFormat="mp4" duration="30">
+
+        <EncoderProfile quality="2160p" fileFormat="mp4" duration="30">
             <Video codec="h264"
-                   bitRate="24000000"
-                   width="1280"
-                   height="720"
-                   frameRate="120" />
+                   bitRate="50000000"
+                   width="3840"
+                   height="2160"
+                   frameRate="30" />
             <Audio codec="aac"
-                   bitRate="156000"
+                   bitRate="256000"
                    sampleRate="48000"
                    channels="2" />
         </EncoderProfile>
--->
+
         <EncoderProfile quality="2160p" fileFormat="mp4" duration="30">
             <Video codec="h264"
                    bitRate="30000000"
@@ -177,7 +177,7 @@
                    height="2160"
                    frameRate="30" />
             <Audio codec="aac"
-                   bitRate="156000"
+                   bitRate="256000"
                    sampleRate="48000"
                    channels="2" />
         </EncoderProfile>
@@ -247,10 +247,10 @@
                    channels="2" />
         </EncoderProfile>
 
-        <ImageEncoding quality="95" />
+        <ImageEncoding quality="100" />
+        <ImageEncoding quality="90" />
         <ImageEncoding quality="80" />
-        <ImageEncoding quality="70" />
-        <ImageDecoding memCap="20000000" />
+        <ImageDecoding memCap="30000000" />
 
     </CamcorderProfiles>
 
@@ -368,10 +368,10 @@
                    channels="1" />
         </EncoderProfile>
 
-        <ImageEncoding quality="95" />
+        <ImageEncoding quality="100" />
+        <ImageEncoding quality="90" />
         <ImageEncoding quality="80" />
-        <ImageEncoding quality="70" />
-        <ImageDecoding memCap="20000000" />
+        <ImageDecoding memCap="30000000" />
 
     </CamcorderProfiles>
 
@@ -433,8 +433,8 @@
         for TEST applications. For other applications, we do
         not perform any checks at all.
     -->
-    <VideoDecoderCap name="wmv" enabled="true"/>
-    <AudioDecoderCap name="wma" enabled="true"/>
+    <VideoDecoderCap name="wmv" enabled="true" />
+    <AudioDecoderCap name="wma" enabled="true" />
 
     <!--
         The VideoEditor Capability configuration:
@@ -449,7 +449,7 @@
     -->
     <VideoEditorCap  maxInputFrameWidth="1920"
         maxInputFrameHeight="1080" maxOutputFrameWidth="1920"
-        maxOutputFrameHeight="1080" maxPrefetchYUVFrames="10"/>
+        maxOutputFrameHeight="1080" maxPrefetchYUVFrames="10" />
     <!--
         The VideoEditor Export codec profile and level values
         correspond to the values in OMX_Video.h.
@@ -461,15 +461,15 @@
     <!--
       Codec = h.264, Baseline profile, level 4.0
     -->
-    <ExportVideoProfile name="h264" profile= "1" level="2048"/>
+    <ExportVideoProfile name="h264" profile= "1" level="2048" />
     <!--
       Codec = h.263, Baseline profile, level 70
     -->
-    <ExportVideoProfile name="h263" profile= "1" level="128"/>
+    <ExportVideoProfile name="h263" profile= "1" level="128" />
     <!--
       Codec = mpeg4, Simple profile, level 5
     -->
-    <ExportVideoProfile name="m4v" profile= "1" level="128"/>
+    <ExportVideoProfile name="m4v" profile= "1" level="128" />
 
     <!--
     LGE_CHAGE[fefe7270.park] Add LgeCamcorderCap
@@ -477,5 +477,5 @@
     <LgeCamcorderCap  minfps="30000" maxfps="30000"
         usehighprofile="1"  audiozoomenable="1"
         audiozoomX="14" audiozoomY="4"
-        usehwaac="1"/>
+        usehwaac="1" />
 </MediaSettings>
