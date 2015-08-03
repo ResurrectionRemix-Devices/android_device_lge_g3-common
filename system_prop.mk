@@ -61,7 +61,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.add_power_save=1 \
     persist.radio.apm_sim_not_pwdn=1 \
-    ro.telephony.ril_class=LgeLteRIL
+    ro.telephony.ril_class=LgeLteRIL \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.netmgrd.qos.enable=false \
@@ -76,9 +76,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.qualcomm.sns.daemon=e \
     debug.qualcomm.sns.hal=e \
     debug.qualcomm.sns.libsensor1=e
-
-#Wifi Hack
-net.tethering.noprovisioning=true
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
